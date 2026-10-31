@@ -1,9 +1,9 @@
-# PASO 2 - Modo informativo: escanea y reporta, sin CSV y sin romper el build
+# PASO 3 - Modo estricto: exporta CSV y rompe el build si hay cualquier hallazgo
 language: ES
-strict: false
+strict: true
 output:
-  file_path: fluid-sca-results.sarif
-  format: SARIF
+  file_path: fluid-sca-results.csv
+  format: CSV
 sca:
   include:
     - .
