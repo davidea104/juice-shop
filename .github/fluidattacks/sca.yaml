@@ -1,0 +1,12 @@
+# PASO 2 - Modo informativo: escanea y reporta, sin CSV y sin romper el build
+language: ES
+strict: false
+output:
+  file_path: fluid-sca-results.sarif
+  format: SARIF
+sca:
+  include:
+    - .
+  exclude:
+    - node_modules/
+    - frontend/node_modules/
