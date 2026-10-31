@@ -1,0 +1,50 @@
+name: Fluid Attacks - SAST, SCA y Secret Scan
+
+on:
+  push:
+    # Solo se dispara al cambiar el workflow: cada paso sube primero las
+    # configuraciones y por ultimo este archivo (una ejecucion por paso)
+    paths:
+      - .github/workflows/fluidattacks.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sast:
+    name: SAST
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: fluidattacks/sast-action@1.3.0
+        id: scan
+        with:
+          scan_config_path: .github/fluidattacks/sast.yaml
+          scanner_mode: full
+
+  sca:
+    name: SCA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: fluidattacks/sca-action@1.2.0
+        id: scan
+        with:
+          scan_config_path: .github/fluidattacks/sca.yaml
+          scanner_mode: full
+
+  secrets:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: fluidattacks/ss-action@0.3.0
+        id: scan
+        with:
+          scan_config_path: .github/fluidattacks/ss.yaml
+          scanner_mode: full
