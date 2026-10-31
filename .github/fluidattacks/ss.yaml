@@ -1,0 +1,12 @@
+# PASO 2 - Modo informativo: escanea y reporta, sin CSV y sin romper el build
+strict: false
+output:
+  file_path: fluid-ss-results.sarif
+  format: SARIF
+ss:
+  include:
+    - .
+  exclude:
+    - node_modules/
+    - frontend/node_modules/
+    - .git/
