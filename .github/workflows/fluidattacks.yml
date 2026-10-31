@@ -24,6 +24,18 @@ jobs:
         with:
           scan_config_path: .github/fluidattacks/sast.yaml
           scanner_mode: full
+      - name: Publicar CSV de resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fluid-sast-csv
+          path: fluid-sast-results.csv
+          if-no-files-found: warn
+      - name: Romper el build si SAST reporta hallazgos
+        if: steps.scan.outputs.vulnerabilities_found == 'true'
+        run: |
+          echo "::error::SAST encontro vulnerabilidades (ver artefacto fluid-sast-csv)"
+          exit 1
 
   sca:
     name: SCA
@@ -35,6 +47,18 @@ jobs:
         with:
           scan_config_path: .github/fluidattacks/sca.yaml
           scanner_mode: full
+      - name: Publicar CSV de resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fluid-sca-csv
+          path: fluid-sca-results.csv
+          if-no-files-found: warn
+      - name: Romper el build si SCA reporta hallazgos
+        if: steps.scan.outputs.vulnerabilities_found == 'true'
+        run: |
+          echo "::error::SCA encontro vulnerabilidades (ver artefacto fluid-sca-csv)"
+          exit 1
 
   secrets:
     name: Secret Scan
@@ -48,3 +72,15 @@ jobs:
         with:
           scan_config_path: .github/fluidattacks/ss.yaml
           scanner_mode: full
+      - name: Publicar CSV de resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fluid-ss-csv
+          path: fluid-ss-results.csv
+          if-no-files-found: warn
+      - name: Romper el build si Secret Scan reporta hallazgos
+        if: steps.scan.outputs.vulnerabilities_found == 'true'
+        run: |
+          echo "::error::Secret Scan encontro vulnerabilidades (ver artefacto fluid-ss-csv)"
+          exit 1
