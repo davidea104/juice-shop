@@ -1,6 +1,6 @@
-# PASO 3 - Modo estricto: exporta CSV y rompe el build si hay cualquier hallazgo
+# PASO 4 - Umbral: exporta CSV y rompe el build solo con hallazgos de severidad >= high (CVSS 7.0)
 language: ES
-strict: true
+strictness_threshold: high
 output:
   file_path: fluid-sast-results.csv
   format: CSV
