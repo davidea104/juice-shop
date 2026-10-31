@@ -31,10 +31,10 @@ jobs:
           name: fluid-sast-csv
           path: fluid-sast-results.csv
           if-no-files-found: warn
-      - name: Romper el build si SAST reporta hallazgos
+      - name: Romper el build si SAST supera el umbral de severidad
         if: steps.scan.outputs.vulnerabilities_found == 'true'
         run: |
-          echo "::error::SAST encontro vulnerabilidades (ver artefacto fluid-sast-csv)"
+          echo "::error::SAST encontro vulnerabilidades con severidad >= high (ver artefacto fluid-sast-csv)"
           exit 1
 
   sca:
@@ -54,10 +54,10 @@ jobs:
           name: fluid-sca-csv
           path: fluid-sca-results.csv
           if-no-files-found: warn
-      - name: Romper el build si SCA reporta hallazgos
+      - name: Romper el build si SCA supera el umbral de severidad
         if: steps.scan.outputs.vulnerabilities_found == 'true'
         run: |
-          echo "::error::SCA encontro vulnerabilidades (ver artefacto fluid-sca-csv)"
+          echo "::error::SCA encontro vulnerabilidades con severidad >= high (ver artefacto fluid-sca-csv)"
           exit 1
 
   secrets:
@@ -79,8 +79,8 @@ jobs:
           name: fluid-ss-csv
           path: fluid-ss-results.csv
           if-no-files-found: warn
-      - name: Romper el build si Secret Scan reporta hallazgos
+      - name: Romper el build si Secret Scan supera el umbral de severidad
         if: steps.scan.outputs.vulnerabilities_found == 'true'
         run: |
-          echo "::error::Secret Scan encontro vulnerabilidades (ver artefacto fluid-ss-csv)"
+          echo "::error::Secret Scan encontro vulnerabilidades con severidad >= high (ver artefacto fluid-ss-csv)"
           exit 1
