@@ -1,8 +1,8 @@
-# PASO 2 - Modo informativo: escanea y reporta, sin CSV y sin romper el build
-strict: false
+# PASO 3 - Modo estricto: exporta CSV y rompe el build si hay cualquier hallazgo
+strict: true
 output:
-  file_path: fluid-ss-results.sarif
-  format: SARIF
+  file_path: fluid-ss-results.csv
+  format: CSV
 ss:
   include:
     - .
